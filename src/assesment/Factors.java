@@ -36,12 +36,16 @@ public class Factors {
 		Statement statement = null; 
 		HashMap<Integer,Float> factors = new HashMap<Integer,Float>();
 		//select * from factors where id=sampleID
-		String queryGetFactorsForID = "SELECT * FROM factors WHERE id=" + sampleID;
+		String queryGetFactorsForID = "SELECT * FROM factors WHERE id=" + sampleID + " ORDER by id, factor_number";
 		try {           
 			connection = JDBCMySQLConnection.getConnection();
 			statement = connection.createStatement();
 			resultSetGetFactorsForID = statement.executeQuery(queryGetFactorsForID);
 			//loop and add factors from result set into the map. Setting key as factor_number and value as factor_computed_value
+			if(resultSetGetFactorsForID.wasNull()){
+				System.out.println("No Factors found for the id:"+sampleID);
+				return factors;
+			}
 			while(resultSetGetFactorsForID.next()){
 				factors.put(resultSetGetFactorsForID.getInt("factor_number"), resultSetGetFactorsForID.getFloat("factor_computed_value"));
 			}
@@ -95,6 +99,18 @@ public class Factors {
 	public void persist(){
 		Connection connection = null;
 		Statement statement = null; 
+		if(!(this.id > 0)){
+			System.out.println("No id set for this Factors Object to persist");
+			return;
+		}
+		if(!(this.factorNumber > 0)){
+			System.out.println("No factor number set for this Factors Object to persist");
+			return;
+		}
+		if(!(this.factorComputedValue > 0)){
+			System.out.println("No factor computed value set for this Factors Object to persist");
+			return;
+		}
 		//insert into factors(id,factor_number,factor_computed_value) VALUES (id,factorNumber,factorComputedValue) [from the object]
 		String queryPersistFactor = "INSERT into factors(id,factor_number,factor_computed_value) VALUES "+"("+this.id+","+ this.factorNumber+","+this.factorComputedValue+")";
 		try {           

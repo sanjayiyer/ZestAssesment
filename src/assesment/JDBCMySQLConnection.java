@@ -15,7 +15,7 @@ public class JDBCMySQLConnection {
     //private constructor
     private JDBCMySQLConnection() {
         try {
-            //Step 2: Load MySQL Java driver
+            //Load MySQL Java driver
             Class.forName(DRIVER_CLASS);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -25,7 +25,7 @@ public class JDBCMySQLConnection {
     private Connection createConnection() {
         Connection connection = null;
         try {
-            //Step 3: Establish Java MySQL connection
+            //Establish Java MySQL connection
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             System.out.println("ERROR: Unable to Connect to Database.");

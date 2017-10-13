@@ -49,6 +49,8 @@ public class FactorWeights {
 				+ bromoform_weight + ", bromodichloromethane_weight=" + bromodichloromethane_weight
 				+ ", dibromichloromethane_weight=" + dibromichloromethane_weight + "]";
 	}
+	//Get Factor Weights from the factor_weights table using an id.
+	//Output : Add the results to a HashMap. Key being component and value being component factor weight
 	public static HashMap<String,Float> getWeightsForID(int id){
 		ResultSet resultSet4GetWeights = null;
 		Connection connection = null;
